@@ -3,7 +3,7 @@ import {products, getProduct} from '../../data/products.js'
 import { formatCurrency } from '../utilss/money.js'
 import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js'
 import {deliveryOptions, getDeliveryOption} from '../../data/deliveryOptions.js'
-
+import { renderPaymentSummary } from './paymentSummery.js'
 export function renderOrderSummary(){
 
     let cartSummaryHTML=''
@@ -34,6 +34,8 @@ export function renderOrderSummary(){
         js-cart-item-container-${matchingProduct.id}">
                 <div class="delivery-date">
                   Delivery date: ${dateString}
+
+                  </div>
 
                 <div class="cart-item-details-grid">
                   <img class="product-image"
@@ -88,7 +90,7 @@ export function renderOrderSummary(){
 
           const isChecked = deliveryOption.id === cartItem.deliveryOptionId
         
-          html += `
+          html +=  `
                   <div class="delivery-option js-delivery-option"
                   data-product-id="${matchingProduct.id}"
                   data-delivery-option-id="${deliveryOption.id}">
@@ -117,11 +119,12 @@ export function renderOrderSummary(){
         link.addEventListener('click',()=>{
             const productId = link.dataset.productId;
             removeFromCart(productId)
-
+            
 
           const container = document.querySelector(`.js-cart-item-container-${productId}`)
 
           container.remove()
+          renderPaymentSummary()
             
         })
 
@@ -133,6 +136,7 @@ export function renderOrderSummary(){
           const{productId,deliveryOptionId}=element.dataset
           updateDeliveryOption(productId,deliveryOptionId)
           renderOrderSummary()
+          renderPaymentSummary()
         })
       })
     }
