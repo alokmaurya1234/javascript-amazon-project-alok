@@ -1,4 +1,4 @@
-import {formatCurrency} from '../scrip/utilss/money.js'
+import {formatCurrency} from '../../scrip/utilss/money.js'
 
 
 describe('test suite: format cuurency', ()=>{
